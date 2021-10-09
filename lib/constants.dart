@@ -1,3 +1,4 @@
+//Here comes the constants
 //Constant for url path of local database
 const String BASE_URL = "http://localhost:8080/api/access";
 
@@ -36,4 +37,5 @@ const String INVOICE_GENERATED_SUCCESSFULLY = "Invoice generated successfully";
 
 //Constant for error message when unable to generate invoice
 const String ERROR_GENERATING_INVOICE = "ERROR: Unable to generate invoice";
+
 
