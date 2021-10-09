@@ -1,10 +1,10 @@
+import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:procurement_management_system_frontend/model/order_model.dart';
-import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:procurement_management_system_frontend/constants.dart' as Constants;
 import 'package:procurement_management_system_frontend/page/home_page.dart';
-import 'package:procurement_management_system_frontend/page/order_list_page.dart';
+import 'package:procurement_management_system_frontend/model/order_model.dart';
 
 class ViewOrderPage extends StatefulWidget {
   final OrderModal orderModal;
@@ -50,8 +50,8 @@ class _ViewOrderPageState extends State<ViewOrderPage> {
   }
 
   updateOrder(String val, BuildContext context) async {
-    var url = "http://localhost:8080/api/access/orders/delivered/" +
-        _id.toString().trim();
+    var url = Constants.BASE_URL + Constants.URL_ORDERS_DELIVERED + 
+    _id.toString().trim();
 
     var response = await http.put(Uri.parse(url),
         headers: <String, String>{"Content-Type": "application/json"});
@@ -61,19 +61,19 @@ class _ViewOrderPageState extends State<ViewOrderPage> {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => HomePage()));
       Fluttertoast.showToast(
-          msg: "Order status updated successfully",
+          msg: Constants.ORDER_STATUS_UPDATED_SUCCESSFULLY,
           backgroundColor: Colors.grey,
           fontSize: 18);
     } else {
       Fluttertoast.showToast(
-          msg: "ERROR: Unable to update order status",
+          msg: Constants.ERROR_UPDATE_ORDER,
           backgroundColor: Colors.grey,
           fontSize: 18);
     }
   }
 
   generateInvoice() async {
-    var url = "http://localhost:8080/api/access/invoices";
+    var url = Constants.BASE_URL + Constants.URL_INVOICES;
 
     var json_body = {"orderId": _id, "user": "Site Manager A"};
 
@@ -85,12 +85,12 @@ class _ViewOrderPageState extends State<ViewOrderPage> {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => HomePage()));
       Fluttertoast.showToast(
-          msg: "Invoice generated successfully",
+          msg: Constants.INVOICE_GENERATED_SUCCESSFULLY,
           backgroundColor: Colors.grey,
           fontSize: 18);
     } else {
       Fluttertoast.showToast(
-          msg: "ERROR: Unable to generate invoice",
+          msg: Constants.ERROR_GENERATING_INVOICE,
           backgroundColor: Colors.grey,
           fontSize: 18);
     }
