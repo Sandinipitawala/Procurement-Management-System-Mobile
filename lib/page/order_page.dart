@@ -2,11 +2,10 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:procurement_management_system_frontend/constants.dart' as Constants;
 import 'package:procurement_management_system_frontend/model/material_model.dart';
-import 'package:procurement_management_system_frontend/model/order_model.dart';
 import 'package:procurement_management_system_frontend/model/site_model.dart';
 import 'package:procurement_management_system_frontend/model/supplier_modal.dart';
-import 'package:procurement_management_system_frontend/widget/button_widget.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({Key? key}) : super(key: key);
@@ -60,7 +59,7 @@ class _OrderPageState extends State<OrderPage> {
 
   Future<void> getSites() async {
     var data = await http.get(
-        Uri.parse("http://localhost:8080/api/access/sites"),
+        Uri.parse(Constants.BASE_URL + Constants.URL_SITES),
         headers: {"Accept": "application/json"});
 
     var jsonData = await convert.json.decode(data.body);
@@ -85,7 +84,7 @@ class _OrderPageState extends State<OrderPage> {
 
   Future<void> getSupplier() async {
     var data = await http.get(
-        Uri.parse("http://localhost:8080/api/access/suppliers"),
+        Uri.parse(Constants.BASE_URL + Constants.URL_SUPPLIERS),
         headers: {"Accept": "application/json"});
 
     var jsonData = await convert.json.decode(data.body);
@@ -110,7 +109,7 @@ class _OrderPageState extends State<OrderPage> {
 
   Future<void> getMaterials() async {
     var data = await http.get(
-        Uri.parse("http://localhost:8080/api/access/materials"),
+        Uri.parse(Constants.BASE_URL + Constants.URL_MATERIALS),
         headers: {"Accept": "application/json"});
 
     var jsonData = await convert.json.decode(data.body);
@@ -143,7 +142,7 @@ class _OrderPageState extends State<OrderPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      var url = "http://localhost:8080/api/access/orders";
+      var url = Constants.BASE_URL + Constants.URL_ORDERS;
 
       var json_body = {
         "item": materialValue.name,
@@ -160,14 +159,14 @@ class _OrderPageState extends State<OrderPage> {
 
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
-            msg: "Order placed successfully",
+            msg: Constants.ORDER_PLACED_SUCCESSFULLY,
             backgroundColor: Colors.grey,
             fontSize: 18);
         _comment = '';
         _quantity = 0;
       } else {
         Fluttertoast.showToast(
-            msg: "ERROR: Unable to place order",
+            msg: Constants.ERROR_ORDER,
             backgroundColor: Colors.grey,
             fontSize: 18);
       }

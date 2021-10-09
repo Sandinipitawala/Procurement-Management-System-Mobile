@@ -1,7 +1,7 @@
+import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
-
+import 'package:procurement_management_system_frontend/constants.dart' as Constants;
 import 'package:procurement_management_system_frontend/model/order_model.dart';
 import 'package:procurement_management_system_frontend/page/view_order_page.dart';
 
@@ -17,7 +17,7 @@ class _OrderListPageState extends State<OrderListPage> {
 
   Future<void> getOrders() async {
     var data = await http.get(
-        Uri.parse("http://localhost:8080/api/access/orders"),
+        Uri.parse(Constants.BASE_URL + Constants.URL_ORDERS),
         headers: {"Accept": "application/json"});
 
     var jsonData = await convert.json.decode(data.body);
